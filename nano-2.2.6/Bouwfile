@@ -1,0 +1,51 @@
+#
+# Copyright (C) 2012 Niek Linnenbank
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+def build(conf):
+    print("Building Nano " + str(conf.VERSION))
+
+    ConfigHeader('config.h', prefix='')
+
+    CheckLibrary('HAVE_NCURSES', 'ncurses', False)
+
+    CheckHeader('HAVE_REGEX', 'regex.h', False)
+    CheckHeader('HAVE_LIMITS_H', 'limits.h', False)
+    CheckHeader('HAVE_GETOPT_H', 'getopt.h', False)
+    CheckHeader('HAVE_SYS_PARAM_H', 'sys/param.h', False)
+    CheckHeader('HAVE_STDARG_H', 'stdarg.h', False)
+    CheckHeader('HAVE_WCHAR_H', 'wchar.h', False)
+    CheckHeader('HAVE_WCTYPE_H', 'wctype.h', False)
+    CheckHeader('HAVE_NCURSES_H', 'ncurses.h', False)
+    CheckHeader('HAVE_LIBINTL_H', 'libintl.h', False)
+
+    CheckFunction('HAVE_VSNPRINTF', 'vsnprintf', 'c', False)
+    CheckFunction('HAVE_ISBLANK', 'isblank', 'ncurses', False)
+    CheckFunction('HAVE_ISWBLANK', 'iswblank', 'ncurses', False)
+    CheckFunction('HAVE_STRCASECMP', 'strcasecmp', 'c', False)
+    CheckFunction('HAVE_STRNCASECMP', 'strncasecmp', 'c', False)
+    CheckFunction('HAVE_STRCASESTR', 'strcasestr', 'c', False)
+    CheckFunction('HAVE_STRNLEN', 'strnlen', 'c', False)
+    CheckFunction('HAVE_GETOPT_LONG', 'getopt_long', 'c', False)
+    CheckFunction('HAVE_GETDELIM', 'getdelim', 'c', False)
+    CheckFunction('HAVE_GETLINE', 'getline', 'c', False)
+
+def dist(conf):
+    Archive('nano-' + str(conf.VERSION) + '.tar.gz',
+	     exclude=['*.o', 'nano', 'config.h'])
+
+def install(conf):
+    Install(conf.BINDIR, ['src/nano'])

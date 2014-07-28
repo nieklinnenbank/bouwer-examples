@@ -1,0 +1,3 @@
+def build(conf):
+    UseLibrary(['ncurses'])
+    Program('nano', '*.c')
